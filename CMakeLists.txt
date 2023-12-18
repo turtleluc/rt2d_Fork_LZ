@@ -17,6 +17,7 @@ OPTION(MAKE_COLLISION "Make Collision application" ON)
 OPTION(MAKE_DEBUGDRAW "Make DebugDraw application" ON)
 OPTION(MAKE_RAYCAST "Make Raycast application" ON)
 OPTION(MAKE_MATRIXPIXEL "Make MatrixPixel application" ON)
+OPTION(MAKE_PENALTY "Make Penalty application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 OPTION(MAKE_SERIAL "Make serial application" OFF)
@@ -138,7 +139,8 @@ add_library(rt2d
 	rt2d/util.c
 	rt2d/util.h
 	rt2d/vectorx.h
-)
+ )
+ 
 file(
 	COPY ${CMAKE_SOURCE_DIR}/rt2d/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
@@ -158,7 +160,8 @@ IF(MAKE_START)
 		start/myentity.h
 		start/myscene.cpp
 		start/myscene.h
-	)
+	 )
+	 
 	target_link_libraries(start
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -211,7 +214,7 @@ IF(MAKE_DEMO)
 		projects/demo/scene23.h
 		projects/demo/superscene.cpp
 		projects/demo/superscene.h
-	)
+	  )
 	target_link_libraries(demo
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -253,13 +256,48 @@ IF(MAKE_CANVAS_DEMO)
 		projects/canvasdemo/scene20.h
 		projects/canvasdemo/superscene.cpp
 		projects/canvasdemo/superscene.h
-	)
+	  )
 	target_link_libraries(canvasdemo
 		${ALL_GRAPHICS_LIBS}
 	)
 	# Copy assets to the build directory
 	file(
 		COPY projects/canvasdemo/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+
+####################################################################
+# penalty														   #
+####################################################################
+IF(MAKE_PENALTY)
+	add_executable(penalty
+		penalty/main.cpp
+		penalty/penaltyScene.cpp
+		penalty/penaltyScene.h
+		penalty/menuScene.cpp
+		penalty/menuScene.h
+		penalty/backGroundEntity.cpp
+		penalty/backGroundEntity.h
+		penalty/ballEntity.cpp
+		penalty/ballEntity.h
+		penalty/arrowEntity.h
+		penalty/arrowEntity.cpp
+		penalty/powerBar.cpp
+		penalty/powerBar.h
+		penalty/powerBarCase.cpp
+		penalty/powerBarCase.h
+		penalty/basicEntity.cpp
+		penalty/basicEntity.h
+		)
+	 
+	target_link_libraries(penalty
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY penalty/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()
@@ -274,7 +312,8 @@ IF(MAKE_BASIC3D)
 		projects/basic3D/cube.h
 		projects/basic3D/myscene.cpp
 		projects/basic3D/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(basic3D
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -294,7 +333,8 @@ IF(MAKE_NOISE)
 		projects/perlinnoise/main.cpp
 		projects/perlinnoise/myscene.cpp
 		projects/perlinnoise/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(noise
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -310,7 +350,8 @@ IF(MAKE_GEOMETRIC)
 		projects/geometric/geometric.h
 		projects/geometric/myscene.cpp
 		projects/geometric/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(geometric
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -326,7 +367,8 @@ IF(MAKE_SHADY)
 		projects/slimshady/myentity.h
 		projects/slimshady/myscene.cpp
 		projects/slimshady/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(slimshady
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -351,7 +393,7 @@ IF(MAKE_FLOCKING)
 		projects/flocking/flock.cpp
 		projects/flocking/scene01.cpp
 		projects/flocking/main.cpp
-	)
+	  )
 	target_link_libraries(flocking
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -369,6 +411,7 @@ IF(MAKE_WOLFENSTEIN)
 	add_executable(wolfenstein
 		projects/wolfenstein/wolfenstein.cpp
 		projects/wolfenstein/main.cpp
+	  
 	)
 	target_link_libraries(wolfenstein
 		${ALL_GRAPHICS_LIBS}
@@ -385,7 +428,8 @@ IF(MAKE_COLLISION)
 		projects/collision/shape.h
 		projects/collision/myscene.cpp
 		projects/collision/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(collision
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -399,7 +443,8 @@ IF(MAKE_DEBUGDRAW)
 		projects/debugdraw/main.cpp
 		projects/debugdraw/myscene.cpp
 		projects/debugdraw/myscene.h
-	)
+		 )
+	 
 	target_link_libraries(debugdraw
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -414,6 +459,7 @@ IF(MAKE_RAYCAST)
 		projects/raycast/myscene.cpp
 		projects/raycast/myscene.h
 	)
+	 
 	target_link_libraries(raycast
 		${ALL_GRAPHICS_LIBS}
 	)
@@ -431,7 +477,8 @@ IF(MAKE_MATRIXPIXEL)
 		projects/matrixpixel/main.cpp
 		projects/matrixpixel/scene01.cpp
 		projects/matrixpixel/scene01.h
-	)
+		)
+	 
 	target_link_libraries(matrixpixel
 		${ALL_GRAPHICS_LIBS}
 	)
