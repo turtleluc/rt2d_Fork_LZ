@@ -14,6 +14,7 @@
 #include "powerBarCase.h"
 #include "powerBar.h"
 #include "basicEntity.h"
+#include "collider.h"
 
 class penaltyScene : public Scene
 {
@@ -45,9 +46,13 @@ private:
 
 	bool barClicked = false;
 
+	bool shoot = false;
+
 	const float maxRotation = 1.0f;
 	const float rotationSpeed = 1.0f;
 
+	int ballSpotY = 0;
+	int ballSpotX = 0;
 
 	int rotationDirection = 1;
 

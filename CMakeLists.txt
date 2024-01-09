@@ -290,6 +290,7 @@ IF(MAKE_PENALTY)
 		penalty/powerBarCase.h
 		penalty/basicEntity.cpp
 		penalty/basicEntity.h
+		penalty/collider.h
 		)
 	 
 	target_link_libraries(penalty

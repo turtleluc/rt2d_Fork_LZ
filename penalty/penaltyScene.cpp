@@ -72,15 +72,52 @@ void penaltyScene::update(float deltaTime)
 	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT / 2;
 	Point2 mouse = Point2(mousex, mousey);
 
-	// check colliders for mouse and make draggable
-	//if (Collider::point2circle(mouse, BallEntity)) {
-		//BallEntity->line()->color = YELLOW;
-		/*if (input()->getMouse(0)) {
-			BallEntity->position = mouse;
-		}*/
-	//}
+	//shoot debug
+	Vector2 direction = Vector2(0, 800);
+	direction.rotation(ArrowEntity->rotation.z - (PI / 2));
+	debugLayer->ddClear();
+	Vector2 line_start = ArrowEntity->position;
+	Vector2 line_end = ArrowEntity->position + direction;
+	debugLayer->ddLine(line_start, line_end, YELLOW);
 
-	//std::cout << ArrowEntity->rotation.z;
+	//// horizontal line
+	Vector2 hor_start = PowerBar->position;
+	Vector2 hor_end = PowerBar->position + Vector2(700, 0);
+	debugLayer->ddLine(hor_start, hor_end, YELLOW);
+
+	// Calculate intersection
+	Vector2 intersectionPoint;
+
+	//Goal rectangles
+	Rectangle topleft = Rectangle(410, 160, 200, 100);
+	Rectangle botleft = Rectangle(410, 260, 200, 100);
+
+	//Top corner 1
+	debugLayer->ddSquare(topleft.x, topleft.y, topleft.width, topleft.height, RED);
+	//Bottom corner 1
+	debugLayer->ddSquare(botleft.x, botleft.y, botleft.width, botleft.height, RED);
+	//Top corner 2
+	debugLayer->ddSquare(690, 160, 200, 100, RED);
+	//Bottom corner 2
+	debugLayer->ddSquare(690, 260, 200, 100, RED);
+	//Middle
+	debugLayer->ddSquare(610, 160, 80, 200, RED);
+
+	// Check if the lines are not parallel
+	if (line_start.x != line_end.x && hor_start.x != hor_end.x) {
+		float Line1 = (line_end.y - line_start.y) / (line_end.x - line_start.x);
+		float Line2 = (hor_end.y - hor_start.y) / (hor_end.x - hor_start.x);
+
+		if (Line1 != Line2) {
+			float x = (Line1 * line_start.x - Line2 * hor_start.x + hor_start.y - line_start.y) / (Line1 - Line2);
+			float y = Line1 * (x - line_start.x) + line_start.y;
+
+			intersectionPoint = Vector2(x, y);
+
+			
+			debugLayer->ddCircle(intersectionPoint.x, intersectionPoint.y, 8, YELLOW);
+		}
+	}
 	 
 	if (!arrowClicked)
 	{
@@ -101,54 +138,85 @@ void penaltyScene::update(float deltaTime)
 	if (barClicked)
 	{
 		PowerBar->position.y += verticalMovementSpeed * deltaTime;
-		
+
 		// laagte
 		if (PowerBar->position.y >= 335)
 		{
-			verticalMovementSpeed = -175;  
+			verticalMovementSpeed = -175;
 		}
 		//hoogte
 		else if (PowerBar->position.y <= 150)
 		{
-			verticalMovementSpeed = 175; 
+			verticalMovementSpeed = 175;
 		}
 
 		if (input()->getMouseUp(0))
 		{
 			barClicked = false;
+			/*shoot = true;*/
+			BallEntity->position.y = intersectionPoint.y;
+			BallEntity->position.x = intersectionPoint.x;
 		}
 	}
 
-Vector2 direction = Vector2(0, 800);
-    direction.rotation(ArrowEntity->rotation.z - (PI / 2));
-    debugLayer->ddClear();
-    Vector2 line_start = ArrowEntity->position;
-    Vector2 line_end = ArrowEntity->position + direction;
-    debugLayer->ddLine(line_start, line_end, YELLOW);
+	if (input()->getKeyDown(KeyCode::Space))
+	{
+		std::cout << "Inter Y " << intersectionPoint.y << std::endl;
+		std::cout << "Inter X " << intersectionPoint.x << std::endl;
 
-    //// horizontal line
-    Vector2 hor_start = PowerBar->position;
-    Vector2 hor_end = PowerBar->position + Vector2(700, 0);
-    debugLayer->ddLine(hor_start, hor_end, YELLOW);
+		int r = rand() % 100;
+		if (r < 25)
+		{
+			//Keeper goes to the correct corner
+			if (Collider::point2rectangle(BallEntity->position, topleft))
+			{
 
-    // Calculate intersection
-    Vector2 intersectionPoint;
+			}
 
-    // Check if the lines are not parallel
-    if (line_start.x != line_end.x && hor_start.x != hor_end.x) {
-        float Line1 = (line_end.y - line_start.y) / (line_end.x - line_start.x);
-        float Line2 = (hor_end.y - hor_start.y) / (hor_end.x - hor_start.x);
+			if (Collider::point2rectangle(BallEntity->position, botleft))
+			{
 
-        if (Line1 != Line2) {
-            float x = (Line1 * line_start.x - Line2 * hor_start.x + hor_start.y - line_start.y) / (Line1 - Line2);
-            float y = Line1 * (x - line_start.x) + line_start.y;
+			}
+		}
+		else
+		{
+			int rc = rand() % 6;
+			//switch (rc) {
+			//case 1:
+			//	if (Collider::point2rectangle(BallEntity->position, topleft))
+			//{
 
-            intersectionPoint = Vector2(x, y);
+			//}
+			//	break;
+			//case 2:
+			//	// code block
+			//	break;
+			//case 3:
+			//	// code block
+			//	break;
+			//case 4:
+			//	// code block
+			//	break;
+			//case 5:
+			//	// code block
+			//	break;
+			//case 6:
+			//	// code block
+			//	break;
+			//default:
+			//	// code block
+			//}
+		}
+	}
 
-            // Draw the circle at the intersection point
-            debugLayer->ddCircle(intersectionPoint.x, intersectionPoint.y, 8, YELLOW);
-        }
-    }
+	/*if (shoot == true)
+	{
+		ballSpotY = BallEntity->position.y - intersectionPoint.y;
+		ballSpotX = BallEntity->position.x - intersectionPoint.x;
+
+		BallEntity->position.y = ballSpotY;
+		BallEntity->position.x = ballSpotX;
+	}*/
 
 }
 
