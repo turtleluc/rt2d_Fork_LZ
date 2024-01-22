@@ -51,6 +51,7 @@ penaltyScene::~penaltyScene()
 	this->removeChild(PowerBarCase);
 	this->removeChild(PowerBar);
 	this->removeChild(debugLayer);
+	this->removeChild(winText);
 
 	// delete myentity from the heap (there was a 'new' in the constructor)
 	delete BackGroundEntity;
@@ -59,6 +60,11 @@ penaltyScene::~penaltyScene()
 	delete PowerBarCase;
 	delete PowerBar;
 	delete debugLayer;
+}
+
+float lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
 }
 
 void penaltyScene::update(float deltaTime)
@@ -91,17 +97,21 @@ void penaltyScene::update(float deltaTime)
 	//Goal rectangles
 	Rectangle topleft = Rectangle(410, 160, 200, 100);
 	Rectangle botleft = Rectangle(410, 260, 200, 100);
+	Rectangle topright = Rectangle(690, 160, 200, 100);
+	Rectangle botright = Rectangle(690, 260, 200, 100);
+	Rectangle mid = Rectangle(610, 160, 80, 200);
 
+	// Rectangles debug show
 	//Top corner 1
 	debugLayer->ddSquare(topleft.x, topleft.y, topleft.width, topleft.height, RED);
 	//Bottom corner 1
 	debugLayer->ddSquare(botleft.x, botleft.y, botleft.width, botleft.height, RED);
 	//Top corner 2
-	debugLayer->ddSquare(690, 160, 200, 100, RED);
+	debugLayer->ddSquare(topright.x, topright.y, topright.width, topright.height, RED);
 	//Bottom corner 2
-	debugLayer->ddSquare(690, 260, 200, 100, RED);
+	debugLayer->ddSquare(botright.x, botright.y, botright.width, botright.height, RED);
 	//Middle
-	debugLayer->ddSquare(610, 160, 80, 200, RED);
+	debugLayer->ddSquare(mid.x, mid.y, mid.width, mid.height, RED);
 
 	// Check if the lines are not parallel
 	if (line_start.x != line_end.x && hor_start.x != hor_end.x) {
@@ -154,60 +164,162 @@ void penaltyScene::update(float deltaTime)
 		{
 			barClicked = false;
 			/*shoot = true;*/
-			BallEntity->position.y = intersectionPoint.y;
-			BallEntity->position.x = intersectionPoint.x;
+
+		}
+		if (!barClicked)
+		{
+			float lerpX = lerp(BallEntity->position.x, intersectionPoint.x, ballSpeed);
+			float lerpY = lerp(BallEntity->position.y, intersectionPoint.y, ballSpeed);
+
+			BallEntity->position = Point2(lerpX, lerpY);
+
+			std::cout << "Inter Y " << intersectionPoint.y << std::endl;
+			std::cout << "Inter X " << intersectionPoint.x << std::endl;
+
+			int r = rand() % 100;
+			if (r < 10)
+			{
+				//Keeper goes to the correct corner
+				if (Collider::point2rectangle(BallEntity->position, topleft))
+				{
+					winText = new Text;
+					winText->message("Caught!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+
+				if (Collider::point2rectangle(BallEntity->position, botleft))
+				{
+					winText = new Text;
+					winText->message("Caught!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+				if (Collider::point2rectangle(BallEntity->position, topright))
+				{
+					winText = new Text;
+					winText->message("Caught!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+				if (Collider::point2rectangle(BallEntity->position, botright))
+				{
+					winText = new Text;
+					winText->message("Caught!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+				if (Collider::point2rectangle(BallEntity->position, mid))
+				{
+					winText = new Text;
+					winText->message("Caught!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+
+			}
+			else
+			{
+				int rc = rand() % 5;
+				bool scored = false;
+				switch (rc) {
+				case 1:
+					if (Collider::point2rectangle(BallEntity->position, topleft))
+					{
+						winText = new Text;
+						winText->message("Caught!");
+						winText->scale = Point2(1, 1);
+						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						this->addChild(winText);
+
+					}
+					else
+					{
+						scored = true;
+					}
+					break;
+				case 2:
+					if (Collider::point2rectangle(BallEntity->position, botleft))
+					{
+						winText = new Text;
+						winText->message("Caught!");
+						winText->scale = Point2(1, 1);
+						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						this->addChild(winText);
+					}
+					else
+					{
+						scored = true;
+					}
+					break;
+				case 3:
+					if (Collider::point2rectangle(BallEntity->position, topright))
+					{
+						winText = new Text;
+						winText->message("Caught!");
+						winText->scale = Point2(1, 1);
+						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						this->addChild(winText);
+					}
+					else
+					{
+						scored = true;
+					}
+					break;
+				case 4:
+					if (Collider::point2rectangle(BallEntity->position, botright))
+					{
+						winText = new Text;
+						winText->message("Caught!");
+						winText->scale = Point2(1, 1);
+						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						this->addChild(winText);
+					}
+					else
+					{
+						scored = true;
+					}
+					break;
+				case 5:
+					if (Collider::point2rectangle(BallEntity->position, mid))
+					{
+						winText = new Text;
+						winText->message("Caught!");
+						winText->scale = Point2(1, 1);
+						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						this->addChild(winText);
+					}
+					else
+					{
+						scored = true;
+					}
+					break;
+
+					// code block
+
+
+				}
+
+
+				if (scored == true)
+				{
+					winText = new Text;
+					winText->message("Goal!");
+					winText->scale = Point2(1, 1);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					this->addChild(winText);
+				}
+			}
+
 		}
 	}
 
-	if (input()->getKeyDown(KeyCode::Space))
-	{
-		std::cout << "Inter Y " << intersectionPoint.y << std::endl;
-		std::cout << "Inter X " << intersectionPoint.x << std::endl;
 
-		int r = rand() % 100;
-		if (r < 25)
-		{
-			//Keeper goes to the correct corner
-			if (Collider::point2rectangle(BallEntity->position, topleft))
-			{
-
-			}
-
-			if (Collider::point2rectangle(BallEntity->position, botleft))
-			{
-
-			}
-		}
-		else
-		{
-			int rc = rand() % 6;
-			//switch (rc) {
-			//case 1:
-			//	if (Collider::point2rectangle(BallEntity->position, topleft))
-			//{
-
-			//}
-			//	break;
-			//case 2:
-			//	// code block
-			//	break;
-			//case 3:
-			//	// code block
-			//	break;
-			//case 4:
-			//	// code block
-			//	break;
-			//case 5:
-			//	// code block
-			//	break;
-			//case 6:
-			//	// code block
-			//	break;
-			//default:
-			//	// code block
-			//}
-		}
-	}
 
 	/*if (shoot == true)
 	{

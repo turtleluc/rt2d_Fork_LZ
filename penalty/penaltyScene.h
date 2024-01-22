@@ -3,6 +3,7 @@
 
 #include <deque>
 #include <rt2d/timer.h>
+#include <rt2d/text.h>
 //#include "projects/demo/superscene.h"
 #include <scene.h>
 #include "projects/raycast/raycast.h"
@@ -40,6 +41,7 @@ private:
 	powerBarCase* PowerBarCase;
 	powerBar* PowerBar;
 	BasicEntity* debugLayer;
+	Text* winText;
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
 	bool arrowClicked = false;
@@ -57,6 +59,8 @@ private:
 	int rotationDirection = 1;
 
 	int verticalMovementSpeed = 175;
+
+	float ballSpeed = 1.0f;
 
 //protected:
 //	unsigned int top_layer;
