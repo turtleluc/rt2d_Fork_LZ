@@ -185,7 +185,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Caught!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2 - 4+00, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 
@@ -194,7 +194,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Caught!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 				if (Collider::point2rectangle(BallEntity->position, topright))
@@ -202,7 +202,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Caught!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 				if (Collider::point2rectangle(BallEntity->position, botright))
@@ -210,7 +210,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Caught!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 				if (Collider::point2rectangle(BallEntity->position, mid))
@@ -218,7 +218,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Caught!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 
@@ -234,7 +234,7 @@ void penaltyScene::update(float deltaTime)
 						winText = new Text;
 						winText->message("Caught!");
 						winText->scale = Point2(1, 1);
-						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 						this->addChild(winText);
 
 					}
@@ -249,7 +249,7 @@ void penaltyScene::update(float deltaTime)
 						winText = new Text;
 						winText->message("Caught!");
 						winText->scale = Point2(1, 1);
-						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 						this->addChild(winText);
 					}
 					else
@@ -263,7 +263,7 @@ void penaltyScene::update(float deltaTime)
 						winText = new Text;
 						winText->message("Caught!");
 						winText->scale = Point2(1, 1);
-						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 						this->addChild(winText);
 					}
 					else
@@ -277,7 +277,7 @@ void penaltyScene::update(float deltaTime)
 						winText = new Text;
 						winText->message("Caught!");
 						winText->scale = Point2(1, 1);
-						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 						this->addChild(winText);
 					}
 					else
@@ -291,7 +291,7 @@ void penaltyScene::update(float deltaTime)
 						winText = new Text;
 						winText->message("Caught!");
 						winText->scale = Point2(1, 1);
-						winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+						winText->position = Point2(SWIDTH / 2 - 400, SHEIGHT / 3);
 						this->addChild(winText);
 					}
 					else
@@ -311,7 +311,7 @@ void penaltyScene::update(float deltaTime)
 					winText = new Text;
 					winText->message("Goal!");
 					winText->scale = Point2(1, 1);
-					winText->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+					winText->position = Point2(SWIDTH / 2, SHEIGHT / 3);
 					this->addChild(winText);
 				}
 			}
